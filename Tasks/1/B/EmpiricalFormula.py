@@ -12,9 +12,9 @@ import numpy as np
 The Empirical formula for water areound the ranges of 405 - 790 THz shows how the different wavelengths of light are refracted by
 """
 def equation(frequency: float):
-    a = (frequency / 1e15)**2
-    b = (1.732 - 0.261 * a)**(-0.5)
-    refractiveIndex = (b + 1)**0.5
+    a: float = (frequency / 1e15)**2
+    b: float = (1.732 - 0.261 * a)**(-0.5)
+    refractiveIndex: float = (b + 1)**0.5
     return refractiveIndex
 
 def test():

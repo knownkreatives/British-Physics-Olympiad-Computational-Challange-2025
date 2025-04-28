@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 """
+The thin lens equation finds the focal point of a lens with a small thickness, bases on the difference in distance between the source image to the lens and the lens to the projected image on a screen
 """
 def equation(
     distanceToSource: float,

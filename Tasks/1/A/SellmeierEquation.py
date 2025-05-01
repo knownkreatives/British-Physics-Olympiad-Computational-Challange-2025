@@ -51,5 +51,8 @@ def test():
     ax.add_collection(lc)
     ax.autoscale()
     ax.set_xlabel("Wavelength (microns)")
-    ax.set_xlabel("Refractive Index")
+    ax.set_ylabel("Refractive Index")
     return fig, ax
+
+test()
+plt.show()

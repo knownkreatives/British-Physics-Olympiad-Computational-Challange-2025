@@ -13,10 +13,10 @@ def equation(frequency: float):
     refractiveIndex: float = (b + 1)**0.5
     return refractiveIndex
 
-def test():
-    start = 405e12
-    end = 790e12
-    count = 50
+def test(
+    start = 405e12,
+    end = 790e12,
+    count = 50):
     frequency = np.linspace(start, end, count)
     wavelength = (3e8 / frequency) * 1e9
     refractiveIndex = equation(frequency)

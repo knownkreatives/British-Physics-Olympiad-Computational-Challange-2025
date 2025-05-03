@@ -46,9 +46,9 @@ def generate_spreadsheet(
     
     wb.save(fileName+".xlsx")
 
-def test():
-    u = [20, 25, 30, 35, 40, 45, 50, 55]
-    v = [65.5, 40, 31, 27, 25, 23.1, 21.5, 20.5]
+def test(
+    u = [20, 25, 30, 35, 40, 45, 50, 55],
+    v = [65.5, 40, 31, 27, 25, 23.1, 21.5, 20.5]):
     generate_spreadsheet("Test", "File", u, v)
 
     uInverse = np.array([1 / val for val in u])
@@ -73,6 +73,8 @@ def test():
     ax.plot(uInverse, y_fit, color="#41A3D0")
     ax.set_xlabel("1 / u")
     ax.set_xlabel("1 / y")
+
+    return fig, ax
 
 if __name__ == "__main__":
     fig, ax = test()

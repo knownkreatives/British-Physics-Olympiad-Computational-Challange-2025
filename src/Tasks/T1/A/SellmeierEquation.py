@@ -24,13 +24,13 @@ def equation(
     
     return refractiveIndex
 
-def test():
-    B_coefficents = [1.03961212, 0.231792344, 1.01146945]
-    C_coefficents = [0.00600069867, 0.0200179144, 103.560653]
+def test(
+    start = 0.3,
+    end = 0.9,
+    count = 50,
+    B_coefficents = [1.03961212, 0.231792344, 1.01146945],
+    C_coefficents = [0.00600069867, 0.0200179144, 103.560653]):
 
-    start = 0.3
-    end = 0.9
-    count = 50
     wavelength = np.linspace(start, end, count)
     refractiveIndex = equation(wavelength, B_coefficents, C_coefficents)
 

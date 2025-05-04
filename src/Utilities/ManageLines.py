@@ -17,7 +17,7 @@ def get_perpendicular_gradient(gradient: float):
     else:
         return -1 / gradient
 
-def line_intersection(p1, m1, p2, m2):
+def get_line_intersection(p1, m1, p2, m2):
     x1, y1 = p1
     x2, y2 = p2
 

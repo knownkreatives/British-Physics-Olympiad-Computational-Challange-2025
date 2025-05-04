@@ -19,10 +19,12 @@ def test(
     start = 0,
     middle = 1,
     end = 2,
-    count = 50):
+    count = 50,
+    fig: plt.Figure = None, ax: plt.Axes = None):
     x = np.linspace(start, end, count)
-
-    fig, ax = plt.subplots()
+    
+    if fig is None and ax is None:
+        fig, ax = plt.subplots()
 
     ax.set_title("Flight time of light")
     ax.plot(x, equation(x, middle, end, 1))

@@ -3,7 +3,7 @@ import numpy as np
 
 def get_gradient(point1: tuple[float, float], point2: tuple[float, float]) -> float:
     try:
-        gradient = find_distance(point1, point2)
+        gradient = (point2[1] - point1[1]) / (point2[0] - point1[0])
     except ZeroDivisionError:
         gradient = float('inf')
     

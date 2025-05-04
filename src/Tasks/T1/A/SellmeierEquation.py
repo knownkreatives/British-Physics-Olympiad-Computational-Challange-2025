@@ -29,7 +29,8 @@ def test(
     end = 0.9,
     count = 50,
     B_coefficents = [1.03961212, 0.231792344, 1.01146945],
-    C_coefficents = [0.00600069867, 0.0200179144, 103.560653]):
+    C_coefficents = [0.00600069867, 0.0200179144, 103.560653],
+    fig: plt.Figure = None, ax: plt.Axes = None):
 
     wavelength = np.linspace(start, end, count)
     refractiveIndex = equation(wavelength, B_coefficents, C_coefficents)
@@ -41,8 +42,9 @@ def test(
     hexColors = [VisibleColors.rgb_to_hex(*c) for c in colors]
     segmentColors = hexColors[:-1]  # One less than number of points
     lc = LineCollection(segments, colors=segmentColors, linewidth=2)
-
-    fig, ax = plt.subplots()
+    
+    if fig is None and ax is None:
+        fig, ax = plt.subplots()
 
     ax.set_title("Model of the refractive index of crown glass")
     ax.add_collection(lc)

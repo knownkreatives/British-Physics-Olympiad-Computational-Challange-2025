@@ -16,7 +16,8 @@ def equation(frequency: float):
 def test(
     start = 405e12,
     end = 790e12,
-    count = 50):
+    count = 50,
+    fig: plt.Figure = None, ax: plt.Axes = None):
     frequency = np.linspace(start, end, count)
     wavelength = (3e8 / frequency) * 1e9
     refractiveIndex = equation(frequency)
@@ -31,8 +32,9 @@ def test(
 
     # Create the LineCollection
     lc = LineCollection(segments, colors=segmentColors, linewidth=2)
-
-    fig, ax = plt.subplots()
+    
+    if fig is None and ax is None:
+        fig, ax = plt.subplots()
 
     ax.set_title("Model of the refractive index of water")
     ax.add_collection(lc)

@@ -48,7 +48,8 @@ def generate_spreadsheet(
 
 def test(
     u = [20, 25, 30, 35, 40, 45, 50, 55],
-    v = [65.5, 40, 31, 27, 25, 23.1, 21.5, 20.5]):
+    v = [65.5, 40, 31, 27, 25, 23.1, 21.5, 20.5],
+    fig: plt.Figure = None, ax: plt.Axes = None):
     generate_spreadsheet("Test", "File", u, v)
 
     uInverse = np.array([1 / val for val in u])
@@ -65,8 +66,9 @@ def test(
     print(f"Mean Absolute Error: {meanAbsoluteError}",
           f"Mean Squared Error: {meanSquaredError}",
           f"Root Mean Squared Error:: {rootMeanSquaredError}", sep="\n")
-
-    fig, ax = plt.subplots()
+    
+    if fig is None and ax is None:
+        fig, ax = plt.subplots()
 
     ax.set_title("Assessing the veracity of the thin lens equation")
     ax.scatter(uInverse, vInverse, color="#D5615F", marker="x")
@@ -77,5 +79,8 @@ def test(
     return fig, ax
 
 if __name__ == "__main__":
-    fig, ax = test()
+    fig , ax = plt.subplots()
+
+    test(fig=fig, ax=ax)
+    
     plt.show()

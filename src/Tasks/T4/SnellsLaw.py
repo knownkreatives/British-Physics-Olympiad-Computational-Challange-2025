@@ -18,14 +18,17 @@ def equation(
     
     return timeOfFlight
 
-def test():
-    start = 0
-    middle = 1
-    end = 2
-    count = 50
+def test(
+    start = 0,
+    middle = 1,
+    end = 2,
+    count = 50,
+    fig: plt.Figure = None, ax: plt.Axes = None):
     x = np.linspace(start, end, count)
-
-    fig, ax = plt.subplots()
+    
+    if fig is None and ax is None:
+        fig, ax = plt.subplots()
+    
     ax.set_title("Flight time of light")
     ax.plot(x, fermatsPrinciple(x, middle, end, 1))
     ax.plot(x, equation(x, middle, 2 * x, end, 1))
@@ -37,5 +40,6 @@ def test():
     return fig, ax
 
 if __name__ == "__main__":
-    fig, ax = test()
+    
+    test()
     plt.show()

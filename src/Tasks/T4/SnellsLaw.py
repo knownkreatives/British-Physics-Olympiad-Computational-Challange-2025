@@ -40,6 +40,5 @@ def test(
     return fig, ax
 
 if __name__ == "__main__":
-    
     test()
     plt.show()

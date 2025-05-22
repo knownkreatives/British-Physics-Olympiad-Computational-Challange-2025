@@ -7,7 +7,6 @@ Hypermetropia can be classified into different types based on its severity and u
 1. Simple Hypermetropia: This is the most common form of hypermetropia, typically developing in childhood or adolescence. It is often hereditary and can be corrected with glasses or contact lenses.
 2. Pathological Hypermetropia: This is a more severe form of hypermetropia that can lead to complications such as amblyopia (lazy eye) and strabismus (crossed eyes). It is often associated with a high degree of hypermetropia and may require surgical intervention.
 3. Accommodative Hypermetropia: This type of hypermetropia occurs when the eye's ability to focus on nearby objects is compromised, leading to blurred vision. It can be caused by a decrease in the eye's ability to accommodate or focus.
-4. Latent Hypermetropia: This type of hypermetropia is present but not detected during routine eye examinations. It may become apparent when the eye's ability to accommodate is reduced, such as during fatigue or illness.
 
 Hypermetropia can be diagnosed through a comprehensive eye examination, which may include:
 1. Visual acuity tests: These tests measure how well you can see at different distances.

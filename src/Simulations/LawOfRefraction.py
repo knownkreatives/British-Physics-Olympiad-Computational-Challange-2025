@@ -1,5 +1,31 @@
 import math
 
+def convert_speed_to_index(speed: float, speedOfLight: float = 3e8) -> float:
+    """
+    Convert the speed of light in a medium to its refractive index.
+
+    Parameters:
+        speed (float): The speed of light in the medium in m/s.
+        speedOfLight (float): The speed of light in vacuum in m/s. Default is 3e8 m/s.
+
+    Returns:
+        float: The refractive index of the medium.
+    """
+    return speedOfLight / speed
+
+def convert_index_to_speed(refractiveIndex: float, speedOfLight: float = 3e8) -> float:
+    """
+    Convert the refractive index of a medium to the speed of light in that medium.
+
+    Parameters:
+        refractiveIndex (float): The refractive index of the medium.
+        speedOfLight (float): The speed of light in vacuum in m/s. Default is 3e8 m/s.
+
+    Returns:
+        float: The speed of light in the medium in m/s.
+    """
+    return speedOfLight / refractiveIndex
+
 def calculate_angle_of_refraction(
     angleOfIncidence: float,
     refractiveIndexIncident: float,
@@ -103,3 +129,12 @@ def calculate_refractive_index_incident(
     refractiveIndexIncident: float = (refractiveIndex * math.sin(angleOfIncidenceRad)) / math.sin(angleOfRefractionRad)
     
     return refractiveIndexIncident
+
+if __name__ == "__main__":
+    incident_angle = 20
+    refreacted_angle = 80
+    refractive_index = 1.333
+
+    refractive_index_incident = calculate_refractive_index_incident(incident_angle, refreacted_angle, refractive_index)
+    print(f"Refrectiv index of the first meduim is: {refractive_index_incident}")
+    print(f"Refrectiv index of the second meduim is: {refractive_index}")

@@ -1,5 +1,3 @@
-import math
-
 def calculate_reflection_angle(incidentAngle: float) -> float:
     """
     Calculate the reflection angle based on the law of reflection.

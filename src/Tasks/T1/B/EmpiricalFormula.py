@@ -19,19 +19,14 @@ def test(
     count = 50,
     fig: plt.Figure = None, ax: plt.Axes = None):
     frequency = np.linspace(start, end, count)
-    wavelength = (3e8 / frequency) * 1e9
+    wavelength = VisibleColors.frequency_to_wavelength
     refractiveIndex = equation(frequency)
 
     points = np.array([frequency, refractiveIndex]).T.reshape(-1, 1, 2)
     segments = np.concatenate([points[:-1], points[1:]], axis=1)
 
-    # Map each segment to a color
-    colors = [VisibleColors.wavelength_to_rgb(wl) for wl in wavelength]
-    hexColors = [VisibleColors.rgb_to_hex(*c) for c in colors]
-    segmentColors = hexColors[:-1]  # One less than number of points
-
     # Create the LineCollection
-    lc = LineCollection(segments, colors=segmentColors, linewidth=2)
+    lc = LineCollection(segments, colors=VisibleColors.get_color_gradient(wavelength), linewidth=2)
     
     if fig is None and ax is None:
         fig, ax = plt.subplots()

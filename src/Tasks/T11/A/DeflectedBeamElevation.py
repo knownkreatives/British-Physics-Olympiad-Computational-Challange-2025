@@ -21,44 +21,105 @@ def find_angle_of_incidence_secondary(refractive_index: float) -> float:
     # arcsin(sqrt((4 - n^2) / 3))
     return np.degrees(np.arcsin(np.sqrt((4 - refractive_index**2) / 3)))
 
+def plot_primary_curve(frequency: float, angles_of_incidence: np.array,
+    fig: plt.Figure = None, ax: plt.Axes = None) -> tuple[plt.Figure, plt.Axes]:
+    
+    # Calculate refractive index once
+    n = equation(frequency)
+    wavelength = VisibleColors.frequency_to_wavelength(frequency)
+    color = VisibleColors.rgb_to_hex(*VisibleColors.wavelength_to_rgb(wavelength))
+    
+    # Calculate elevations
+    elevations = [get_elevation_angle_primary(n, a) for a in angles_of_incidence]
+    
+    if fig is None and ax is None:
+        fig, ax = plt.subplots()
+    
+    # Plot the main curve
+    ax.plot(angles_of_incidence, elevations, 
+           color=color, 
+           linewidth=2,
+           label=f'Primary {wavelength:.0f} nm')
+    
+    # Find and plot minimum
+    min_angle = find_angle_of_incidence_primary(n)
+    min_elevation = get_elevation_angle_primary(n, min_angle)
 
-count = 50
-frequencies = np.linspace(405e12, 790e12, count)
-wavelengths = (3e8 / frequencies) * 1e9
-angles_of_incidence = np.linspace(0, 90, count)
-refractive_indices = equation(frequencies)
+    ax.axline((min_angle, min_elevation), slope=0, color=color,
+             label=f'Primary Minimum Angle of Incidence ({wavelength:.0f} nm)')
 
-primary_elevations = [get_elevation_angle_primary(n, a) for n, a in zip(refractive_indices, angles_of_incidence)]
-secondary_elevations = [get_elevation_angle_secondary(n, a) for n, a in zip(refractive_indices, angles_of_incidence)]
+    return fig, ax
 
-primary_minimum_angle = np.min([find_angle_of_incidence_primary(n) for n in refractive_indices])
-primary_minimum_elevation = np.min(primary_elevations)
-secondary_maximum_angle = np.max([find_angle_of_incidence_secondary(n) for n in refractive_indices])
-secondary_maximum_elevation = np.max(secondary_elevations)
+def plot_secondary_curve(frequency: float, angles_of_incidence: np.array,
+    fig: plt.Figure = None, ax: plt.Axes = None) -> tuple[plt.Figure, plt.Axes]:
+    
+    # Calculate refractive index once
+    n = equation(frequency)
+    wavelength = VisibleColors.frequency_to_wavelength(frequency)
+    color = VisibleColors.rgb_to_hex(*VisibleColors.wavelength_to_rgb(wavelength))
+    
+    # Calculate elevations
+    elevations = [get_elevation_angle_secondary(n, a) for a in angles_of_incidence]
+    
+    if fig is None and ax is None:
+        fig, ax = plt.subplots()
+    
+    # Plot the secondary curve
+    ax.plot(angles_of_incidence, elevations, 
+           color=color, 
+           linewidth=2,
+           label=f'Secondary {wavelength:.0f} nm')
+    
+    # Find and plot maximum
+    max_angle = find_angle_of_incidence_secondary(n)
+    max_elevation = get_elevation_angle_secondary(n, max_angle)
 
-primary_points = np.array([angles_of_incidence, primary_elevations]).T.reshape(-1, 1, 2)
-secondary_points = np.array([angles_of_incidence, secondary_elevations]).T.reshape(-1, 1, 2)
-primary_segments = np.concatenate([primary_points[:-1], primary_points[1:]], axis=1)
-secondary_segments = np.concatenate([secondary_points[:-1], secondary_points[1:]], axis=1)
+    ax.axline((max_angle, max_elevation), slope=0, color=color,
+             label=f'Secondary maximum Angle of Incidence ({wavelength:.0f} nm)')
 
-colors = [VisibleColors.wavelength_to_rgb(wl) for wl in wavelengths]
-hexColors = [VisibleColors.rgb_to_hex(*c) for c in colors]
-segmentColors = hexColors[:-1]  # One less than number of points
+    return fig, ax
 
-# Create the LineCollection
-primary_curve = LineCollection(primary_segments, colors=segmentColors, linewidth=2)
-secondary_curve = LineCollection(secondary_segments, colors=segmentColors, linewidth=2)
+def plot_rainbow_curves(bands: int = 7,
+    start: float = 405e12,
+    end: float = 790e12,
+    count: int = 50,
+    fig: plt.Figure = None, ax: plt.Axes = None) -> tuple[plt.Figure, plt.Axes]:
+    """
+    Plot primary and secondary curves for a range of frequencies across the visible spectrum.
+    """
+    angles_of_incidence = np.linspace(0, 90, count)
+    
+    if fig is None and ax is None:
+        fig, ax = plt.subplots()
 
-fig, ax = plt.subplots()
+    for i in range(bands):
+        frequency = np.mean(np.linspace(start + (end - start) * i / bands, start + (end - start) * (i + 1) / bands, 2))
+        plot_primary_curve(frequency, angles_of_incidence, fig, ax)
+        plot_secondary_curve(frequency, angles_of_incidence, fig, ax)
 
-ax.set_title('Deflected Beam Elevation Angles')
-ax.add_collection(primary_curve)
-ax.add_collection(secondary_curve)
-ax.axline((primary_minimum_angle, primary_minimum_elevation), slope=0, label='Primary Minimum Angle')
-ax.axline((secondary_maximum_angle, secondary_maximum_elevation), slope=0, label='Secondary Maximum Angle')
-ax.set_xlim([0, 90])
-ax.set_ylim([0, 180])
-ax.set_xlabel('Angle of Incidence (degrees)')
-ax.set_ylabel('Elevation (degrees)')
-ax.grid(True)
-plt.show()
+    return fig, ax
+
+def test(count = 50,
+    start = 405e12,
+    end = 790e12,
+    bands = 7,
+    fig: plt.Figure = None, ax: plt.Axes = None):
+    ax.set_title("Deflected Beam Elevation Angles")
+
+    plot_rainbow_curves(bands=bands, start=start, end=end, count=count, fig=fig, ax=ax)
+
+    ax.set_xlabel("Angle of Incidence (degrees)")
+    ax.set_ylabel("Deflected Beam Elevation Angle (degrees)")
+
+    ax.set_xlim([0, 90])
+    ax.set_ylim([0, 180])
+    ax.grid(True)
+    plt.show()
+
+if __name__ == "__main__":
+    fig, ax = plt.subplots()
+    
+    test(count=50, start=405e12, end=790e12, bands=7, fig=fig, ax=ax)
+    
+    plt.show()
+    

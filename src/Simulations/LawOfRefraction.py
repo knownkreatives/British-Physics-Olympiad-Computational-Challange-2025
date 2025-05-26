@@ -138,3 +138,25 @@ if __name__ == "__main__":
     refractive_index_incident = calculate_refractive_index_incident(incident_angle, refreacted_angle, refractive_index)
     print(f"Refrectiv index of the first meduim is: {refractive_index_incident}")
     print(f"Refrectiv index of the second meduim is: {refractive_index}")
+
+def calculate_critical_angle(
+    refractiveIndexIncident: float,
+    refractiveIndex: float):
+    """
+    Calculate the critical angle for total internal reflection.
+
+    Parameters:
+        refractiveIndexIncident (float): The refractive index of the first medium.
+        refractiveIndex (float): The refractive index of the second medium.
+
+    Returns:
+        float: The critical angle in degrees.
+    """
+    
+    if refractiveIndexIncident <= refractiveIndex:
+        raise ValueError("Total internal reflection does not occur; no critical angle.")
+    
+    critical_angle_rad = math.asin(refractiveIndex / refractiveIndexIncident)
+    critical_angle: float = math.degrees(critical_angle_rad)
+    
+    return critical_angle

@@ -2,7 +2,6 @@ from Utilities import VisibleColors
 from Tasks.T1.B.EmpiricalFormula import equation
 
 import matplotlib.pyplot as plt
-from matplotlib.collections import LineCollection
 import numpy as np
 
 def get_elevation_angle_primary(refractve_index: float, angle_of_incidence: float) -> float:
@@ -104,7 +103,7 @@ def test(count = 50,
     end = 790e12,
     bands = 7,
     fig: plt.Figure = None, ax: plt.Axes = None):
-    ax.set_title("Deflected Beam Elevation Angles")
+    ax.set_title("Elevation Angles of deflected beams in a rainbow")
 
     plot_rainbow_curves(bands=bands, start=start, end=end, count=count, fig=fig, ax=ax)
 
@@ -119,7 +118,7 @@ def test(count = 50,
 if __name__ == "__main__":
     fig, ax = plt.subplots()
     
-    test(count=50, start=405e12, end=790e12, bands=7, fig=fig, ax=ax)
+    test(count=50, start=405e12, end=790e12, bands=10, fig=fig, ax=ax)
     
     plt.show()
     

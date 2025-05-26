@@ -1,6 +1,6 @@
 import math
 
-refractive_indicies = {
+REFRACTIVE_INDICIES = {
     "air": 1.000293,
     "water": 1.333,
     "glass": 1.5,

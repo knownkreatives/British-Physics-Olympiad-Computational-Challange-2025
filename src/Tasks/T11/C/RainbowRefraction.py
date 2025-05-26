@@ -88,7 +88,7 @@ def plot_critical_angle(start: float, end: float, count: float, refractive_index
     return fig, ax
 
 def test(count: int = 50, start: float = 405e12, end: float = 790e12,
-    refractive_index: float = LawOfRefraction.refractive_indicies["air"],
+    refractive_index: float = LawOfRefraction.REFRACTIVE_INDICIES["air"],
     fig: plt.Figure = None, ax: plt.Axes = None) -> tuple[plt.Figure, plt.Axes]:
 
     if fig is None and ax is None:

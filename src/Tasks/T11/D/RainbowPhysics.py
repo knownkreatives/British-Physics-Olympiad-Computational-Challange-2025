@@ -51,7 +51,7 @@ def plot_rainbow(start: float, end: float, height: float, distance: float, solar
         radius_secondary, _, anti_depth_secondary, beta_secondary = calculate_arc(height, distance, solar_angle, find_angle_of_incidence_secondary(equation(frequency)), view_angle, frequency)
         plot_arc(radius_secondary, height, anti_depth_secondary, beta_secondary, frequency, fig, ax)
     
-    r, h, _, _ = calculate_arc(height, distance, solar_angle, find_angle_of_incidence_primary(equation(f)), view_angle, end)
+    r, h, _, _ = calculate_arc(height, distance, solar_angle, find_angle_of_incidence_primary(equation(end)), view_angle, end)
     ax.set_ylim(-h * 1.5, h * 1.5)
     ax.set_xlim(-r * 1.5, r * 1.5)
 

@@ -1,5 +1,16 @@
 import math
 
+refractive_indicies = {
+    "air": 1.000293,
+    "water": 1.333,
+    "glass": 1.5,
+    "diamond": 2.42,
+    "silicon": 3.42,
+    "germanium": 4.0,
+    "sapphire": 1.76,
+    "quartz": 1.46
+}
+
 def convert_speed_to_index(speed: float, speedOfLight: float = 3e8) -> float:
     """
     Convert the speed of light in a medium to its refractive index.

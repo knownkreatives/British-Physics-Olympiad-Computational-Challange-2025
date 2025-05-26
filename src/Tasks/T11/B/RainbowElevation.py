@@ -67,11 +67,27 @@ def plot_secondary_curve(start: float, end: float, count: float,
 
     return fig, ax
 
-fig, ax = plt.subplots(figsize=(10, 6))
-plot_primary_curve(405e12, 790e12, 50, fig, ax)
-plot_secondary_curve(405e12, 790e12, 50, fig, ax)
+def test(count: int = 50,
+    start: float = 405e12,
+    end: float = 790e12,
+    fig: plt.Figure = None, ax: plt.Axes = None) -> tuple[plt.Figure, plt.Axes]:
+    """
+    Test function to plot primary and secondary curves for a range of frequencies across the visible spectrum.
+    """
+    if fig is None and ax is None:
+        fig, ax = plt.subplots(figsize=(10, 6))
 
-plt.title('Elevation Angles of single and double rainbows beams')
-plt.legend()
-plt.grid()
-plt.show()
+    plot_primary_curve(start, end, count, fig, ax)
+    plot_secondary_curve(start, end, count, fig, ax)
+
+    ax.set_title("Elevation Angles of Primary and Secondary Rainbows")
+    ax.set_xlabel("Frequency (Hz)")
+    ax.set_ylabel("Elevation Angle (degrees)")
+    ax.grid()
+    ax.legend(['Primary Rainbow', 'Secondary Rainbow'])
+
+    return fig, ax
+
+if __name__ == "__main__":
+    fig, ax = test()
+    plt.show()

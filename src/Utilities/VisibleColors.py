@@ -1,3 +1,11 @@
+RED_WAVELENGTH = 650.0  # nm
+GREEN_WAVELENGTH = 530.0  # nm
+BLUE_WAVELENGTH = 470.0  # nm
+
+RED_FREQUENCY = 460e12  # Hz
+GREEN_FREQUENCY = 566e12  # Hz
+BLUE_FREQUENCY = 638e12  # Hz
+
 def frequency_to_wavelength(frequency: float) -> float:
     """
     Convert frequency in Hz to wavelength in nm.

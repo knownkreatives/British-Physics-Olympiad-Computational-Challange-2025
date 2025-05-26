@@ -105,7 +105,7 @@ def test(count = 50,
     fig: plt.Figure = None, ax: plt.Axes = None):
     ax.set_title("Elevation Angles of deflected beams in a rainbow")
 
-    plot_rainbow_curves(bands=bands, start=start, end=end, count=count, fig=fig, ax=ax)
+    plot_rainbow_curves(bands, start, end, count, fig, ax)
 
     ax.set_xlabel("Angle of Incidence (degrees)")
     ax.set_ylabel("Deflected Beam Elevation Angle (degrees)")
@@ -118,7 +118,7 @@ def test(count = 50,
 if __name__ == "__main__":
     fig, ax = plt.subplots()
     
-    test(count=50, start=405e12, end=790e12, bands=10, fig=fig, ax=ax)
+    test()
     
     plt.show()
     

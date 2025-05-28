@@ -1,38 +1,60 @@
 from Utilities.ImageControls import upload_local_image, convert_image_to_array
 from Utilities.ManageLines import *
+from Utilities.Transformations import *
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Arc
 import numpy as np
+from PIL import Image
 
-def get_reflected_point(point: tuple[float, float], intersectPoint: tuple[float, float]):
-    reflectPoint = 2 * np.array(intersectPoint) - np.array(point)
-    return reflectPoint
+class GeometricImage:
+    def __init__(self, image: Image):
+        self.image = image
+        self.rot = create_2d_rotation_matrix(0)
+        self.pos = create_2d_translation_matrix(0)
+        self.scale = create_2d_scaling_matrix(image.width, image.height)
 
-def image_test(
+    def plot(self, ax: plt.Axes):
+        # Resize image
+        resizedImage = self.image.resize(self.scale)
+        # Convert to array
+        img_array = np.array(resizedImage)
+        # Get image center
+        center = (img_array.shape[1] / 2, img_array.shape[0] / 2)
+        # Create rotation matrix
+        angle_deg = np.degrees(np.arccos(self.rot[0, 0]))  # Assuming rotation matrix is 2x2
+        # Rotate image using PIL
+        rotated_img = Image.fromarray(img_array).rotate(angle_deg, resample=Image.BICUBIC, expand=True, center=center)
+        # Show image
+        ax.imshow(rotated_img, extent=(self.pos[0], self.pos[0] + rotated_img.width, self.pos[1], self.pos[1] + rotated_img.height))
+
+def plot_image(
         imageScale = 0.5,
         imageShift = [20, 10],
+        imageRot = 0,
         fig: plt.Figure = None, ax: plt.Axes = None):
     
     if fig is None and ax is None:
         fig, ax = plt.subplots()
 
-    image = upload_local_image()
+    image = GeometricImage(upload_local_image())
 
     try:
-        newSize = (int(image.width * imageScale), int(image.height * imageScale))
-        resizedImage = image.resize(newSize)
-
-        ax.imshow(resizedImage, extent=(imageShift[0], imageShift[0] + convert_image_to_array(resizedImage).shape[1], imageShift[1], imageShift[1] + convert_image_to_array(resizedImage).shape[0]))
-        
+        image.scale = create_2d_scaling_matrix(imageScale, imageScale)
+        image.pos = create_2d_translation_matrix(*imageShift)
+        image.rot = create_2d_rotation_matrix(np.radians(imageRot))
+        image.plot()
         ax.set_title('Image Translated on Plot')
         
-        ax.set_xlim(-convert_image_to_array(resizedImage).shape[1] * 2, convert_image_to_array(resizedImage).shape[1] * 2)
-        ax.set_ylim(-convert_image_to_array(resizedImage).shape[0] * 2, convert_image_to_array(resizedImage).shape[0] * 2)
+        ax.set_xlim(-image.sacale[0] * 2, -image.sacale[0] * 2)
+        ax.set_ylim(-image.scale[1] * 2, -image.sacale[1] * 2)
     except Exception as e:
         print(f"Error displaying image: {e}")
 
-    return fig, ax
+    return fig, ax, image
+
+def calculate_reflection():
+    pass
 
 def test(
         point1: tuple[float, float] = (10, 0),
@@ -68,7 +90,7 @@ if __name__ == "__main__":
     fig , ax1 = plt.subplots()
     ax2 = ax1.twinx()
     
-    image_test(fig=fig, ax=ax1)
+    _, _, img = plot_image(fig=fig, ax=ax1)
 
     point1 = (10, 0)
     point2 = (-10, 0)
@@ -76,7 +98,7 @@ if __name__ == "__main__":
     reflectPoint = (10, 10)
     test(point1, point2, point3, 30, fig=fig, ax=ax2)
     
-    reflectedPoint = get_reflected_point(reflectPoint, get_line_intersection(point1, get_gradient(point1, point2), reflectPoint, get_perpendicular_gradient(get_gradient(point1, point2))))
+    reflectedPoint = find_reflected_point(reflectPoint, get_line_intersection(point1, get_gradient(point1, point2), reflectPoint, get_perpendicular_gradient(get_gradient(point1, point2))))
 
     ax2.plot(*reflectPoint, marker='*', color="#0000FF", label="Reflected Point")
     ax2.plot(*reflectedPoint, marker='*', color="#0000FF", label="Reflected Point")

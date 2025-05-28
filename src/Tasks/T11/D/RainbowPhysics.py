@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Arc
 import numpy as np
 
-
 def calculate_arc(distance: float, solar_angle: float, elevation_angle: float):
     if solar_angle == 0:
         return 0, distance, 0, 0 # No elevation or arc if solar angle is zero
@@ -79,7 +78,6 @@ def plot_rainbow(start: float, end: float, solar_angle: float, distance: float, 
     ax.set_ylim(0, max_radius * 1.1)
     
     return fig, ax
-
 
 # Create arcs for primary and secondary rainbow
 fig, ax = plt.subplots()

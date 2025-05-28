@@ -37,11 +37,15 @@ def get_line_intersection(p1, m1, p2, m2):
 def find_midpoint(point1: tuple[float, float], point2: tuple[float, float]) -> tuple[float, float]:
     return ((point1[0] + point2[0]) / 2, (point1[1] + point2[1]) / 2)
 
-def find_midpoint2(xx: tuple[float, float], yy: tuple[float, float]) -> tuple[float, float]:
+def find_midpoint_2(xx: tuple[float, float], yy: tuple[float, float]) -> tuple[float, float]:
     return ((xx[0] + xx[1]) / 2, (yy[0] + yy[1]) / 2)
 
 def find_distance(point1: tuple[float, float], point2: tuple[float, float]) -> float:
     return np.sqrt((point2[0] - point1[0]) ** 2 + (point2[1] - point1[1]) ** 2)
 
-def find_distance2(xx: tuple[float, float], yy: tuple[float, float]) -> float:
+def find_distance_2(xx: tuple[float, float], yy: tuple[float, float]) -> float:
     return np.sqrt((xx[1] - xx[0]) ** 2 + (yy[1] - yy[0]) ** 2)
+
+def find_reflected_point(point: tuple[float, float], intersectPoint: tuple[float, float]):
+    reflectPoint = 2 * np.array(intersectPoint) - np.array(point)
+    return reflectPoint

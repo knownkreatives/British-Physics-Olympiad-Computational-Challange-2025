@@ -55,6 +55,42 @@ def plot_relfection_line(
 
     return fig, ax, normal_line
 
+def reflect_image_across_line(image, line):
+    """
+    Reflects a GeometricImage object across a given line.
+
+    Args:
+        image: GeometricImage object to reflect.
+        line: List of two points [(x1, y1), (x2, y2)] defining the mirror line.
+
+    Returns:
+        GeometricImage: Reflected image object.
+    """
+    # Calculate the angle of the mirror line
+    (x1, y1), (x2, y2) = line
+    dx, dy = x2 - x1, y2 - y1
+    theta = np.arctan2(dy, dx)
+
+    # Translate so the mirror passes through the origin
+    translation = create_2d_translation_matrix(-x1, -y1)
+    inv_translation = create_2d_translation_matrix(x1, y1)
+
+    # Rotate so the mirror is aligned with the x-axis
+    rotation = create_2d_rotation_matrix(-theta)
+    inv_rotation = create_2d_rotation_matrix(theta)
+
+    # Reflection matrix across x-axis
+    reflection = np.array([[1, 0, 0],
+                           [0, -1, 0],
+                           [0, 0, 1]])
+
+    # Compose the transformation: T⁻¹ * R⁻¹ * Reflect * R * T
+    transform = inv_translation @ inv_rotation @ reflection @ rotation @ translation
+
+    # Apply the transformation to the image
+    image.apply_transformation(transform)
+    return image
+
 # if __name__ == "__main__":
 #     fig , ax1 = plt.subplots()
 #     ax2 = ax1.twinx()

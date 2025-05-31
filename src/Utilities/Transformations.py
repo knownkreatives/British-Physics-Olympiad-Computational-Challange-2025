@@ -1,5 +1,4 @@
 import numpy as np
-import math
 
 def create_2d_rotation_matrix(angle_radians):
     """Create 2D rotation matrix"""

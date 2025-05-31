@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import numpy as np
 
 def get_gradient(point1: tuple[float, float], point2: tuple[float, float]) -> float:
@@ -50,10 +49,10 @@ def find_reflected_point(point: tuple[float, float], intersectPoint: tuple[float
     reflectPoint = 2 * np.array(intersectPoint) - np.array(point)
     return reflectPoint
 
-def reflect_points(points: list[tuple[float, float]], line_point1: tuple[float, float], line_point2: tuple[float, float]):
-    gradient = get_gradient(line_point1, line_point2)
+def reflect_points(points: list[tuple[float, float]], reflection_line: list[tuple[float, float], tuple[float, float]]):
+    gradient = get_gradient(*reflection_line)
     perpendicular_gradient = get_perpendicular_gradient(gradient)
-    intersection_point = get_line_intersection(line_point1, gradient, line_point2, perpendicular_gradient)
+    intersection_point = get_line_intersection(reflection_line[0], gradient, reflection_line[1], perpendicular_gradient)
 
     reflected_points = np.empty(shape=(len(points), 2))
     
@@ -62,5 +61,8 @@ def reflect_points(points: list[tuple[float, float]], line_point1: tuple[float, 
 
     return reflected_points
 
-def reflect_line(line: list[tuple[float, float], tuple[float, float]], ):
-    pass
+def reflect_line(line: list[tuple[float, float], tuple[float, float]], reflection_line: list[tuple[float, float], tuple[float, float]]):
+    reflected_start = find_reflected_point(line[0], get_line_intersection(line[0], get_gradient(*reflection_line), reflection_line[0], get_perpendicular_gradient(get_gradient(*reflection_line))))
+    reflected_end = find_reflected_point(line[1], get_line_intersection(line[1], get_gradient(*reflection_line), reflection_line[0], get_perpendicular_gradient(get_gradient(*reflection_line))))
+    reflected_line = [tuple(reflected_start), tuple(reflected_end)]
+    return reflected_line

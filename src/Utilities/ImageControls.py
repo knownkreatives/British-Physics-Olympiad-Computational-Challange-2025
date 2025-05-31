@@ -27,6 +27,19 @@ class GeometricImage:
         # Show image
         ax.imshow(rotated_img, extent=(self.pos[0], self.pos[0] + rotated_img.width, self.pos[1], self.pos[1] + rotated_img.height))
 
+    def apply_transformations(self, rotation_angle=0, translation=(0, 0), scaling=(1, 1)):
+        """
+        Applies rotation, translation, and scaling transformations to the image.
+
+        Parameters:
+            rotation_angle (float): Rotation angle in radians.
+            translation (tuple): (x, y) translation values.
+            scaling (tuple): (sx, sy) scaling factors.
+        """
+        self.rot = create_2d_rotation_matrix(rotation_angle)
+        self.pos = create_2d_translation_matrix(*translation)
+        self.scale = create_2d_scaling_matrix(*scaling)
+
 def upload_local_image(filePath: str = None) -> Image.Image:
     """
     Opens a file dialog to upload an image and optionally displays it.

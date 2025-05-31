@@ -49,3 +49,18 @@ def find_distance_2(xx: tuple[float, float], yy: tuple[float, float]) -> float:
 def find_reflected_point(point: tuple[float, float], intersectPoint: tuple[float, float]):
     reflectPoint = 2 * np.array(intersectPoint) - np.array(point)
     return reflectPoint
+
+def reflect_points(points: list[tuple[float, float]], line_point1: tuple[float, float], line_point2: tuple[float, float]):
+    gradient = get_gradient(line_point1, line_point2)
+    perpendicular_gradient = get_perpendicular_gradient(gradient)
+    intersection_point = get_line_intersection(line_point1, gradient, line_point2, perpendicular_gradient)
+
+    reflected_points = np.empty(shape=(len(points), 2))
+    
+    for i in len(points):
+        reflected_points[i] = find_reflected_point(points[i], intersection_point)
+
+    return reflected_points
+
+def reflect_line(line: list[tuple[float, float], tuple[float, float]], ):
+    pass

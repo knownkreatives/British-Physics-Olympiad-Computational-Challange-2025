@@ -1,7 +1,31 @@
+from Utilities.Transformations import *
+
+import matplotlib.pyplot as plt
+import numpy as np
 import requests
 from tkinter import Tk, filedialog
 from PIL import Image
-import numpy as np
+
+class GeometricImage:
+    def __init__(self, image: Image):
+        self.image = image
+        self.rot = create_2d_rotation_matrix(0)
+        self.pos = create_2d_translation_matrix(0, 0)
+        self.scale = create_2d_scaling_matrix(image.width, image.height)
+
+    def plot(self, ax: plt.Axes):
+        # Resize image
+        resizedImage = self.image.resize(self.scale)
+        # Convert to array
+        img_array = np.array(resizedImage)
+        # Get image center
+        center = (img_array.shape[1] / 2, img_array.shape[0] / 2)
+        # Create rotation matrix
+        angle_deg = np.degrees(np.arccos(self.rot[0, 0]))  # Assuming rotation matrix is 2x2
+        # Rotate image using PIL
+        rotated_img = Image.fromarray(img_array).rotate(angle_deg, resample=Image.BICUBIC, expand=True, center=center)
+        # Show image
+        ax.imshow(rotated_img, extent=(self.pos[0], self.pos[0] + rotated_img.width, self.pos[1], self.pos[1] + rotated_img.height))
 
 def upload_local_image(filePath: str = None) -> Image.Image:
     """

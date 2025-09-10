@@ -1,7 +1,7 @@
 from Utilities import VisibleColors
 from Simulations import LawOfRefraction
 from Tasks.T11.A.DeflectedBeamElevation import find_angle_of_incidence_primary, find_angle_of_incidence_secondary
-from Tasks.T1.B.EmpiricalFormula import equation
+from Tasks.T01.B.EmpiricalFormula import equation
 
 import matplotlib.pyplot as plt
 import numpy as np

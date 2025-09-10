@@ -1,6 +1,6 @@
 from Utilities import VisibleColors
 from Tasks.T11.A.DeflectedBeamElevation import get_elevation_angle_primary, get_elevation_angle_secondary
-from Tasks.T1.B.EmpiricalFormula import equation
+from Tasks.T01.B.EmpiricalFormula import equation
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Arc

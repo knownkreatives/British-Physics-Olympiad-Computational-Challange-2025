@@ -1,5 +1,5 @@
 from Utilities import VisibleColors
-from Tasks.T1.B.EmpiricalFormula import equation
+from Tasks.T01.B.EmpiricalFormula import equation
 
 import matplotlib.pyplot as plt
 import numpy as np

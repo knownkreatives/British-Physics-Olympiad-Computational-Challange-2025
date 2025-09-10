@@ -1,4 +1,4 @@
-from Tasks.T3.FermatsPrinciple import equation as fermatsPrinciple
+from Tasks.T03.FermatsPrinciple import equation as fermatsPrinciple
 
 import matplotlib.pyplot as plt
 import numpy as np

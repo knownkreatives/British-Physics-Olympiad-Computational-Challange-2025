@@ -88,3 +88,8 @@ def get_color_gradient(wavelength: list[float]) -> list[float]:
     hexColors = [rgb_to_hex(*c) for c in colors]
     segmentColors = hexColors[:-1]  # One less than number of points
     return segmentColors
+
+if __name__ == "__main__":
+    wav = 600
+    print(wavelength_to_rgb(wav))
+    print(rgb_to_hex(*wavelength_to_rgb(wav)))
